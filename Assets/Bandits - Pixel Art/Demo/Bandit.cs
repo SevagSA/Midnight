@@ -12,6 +12,12 @@ public class Bandit : MonoBehaviour {
     private bool                m_grounded = false;
     private bool                m_combatIdle = false;
     private bool                m_isDead = false;
+    private bool isTouchingLeft;
+    private bool isTouchingRight;
+    private bool wallJumping;
+    private float touchingLeftOrRight;
+
+    public LayerMask TileMap;
 
     // Use this for initialization
     void Start () {
@@ -19,9 +25,9 @@ public class Bandit : MonoBehaviour {
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         //Check if character just landed on the ground
         if (!m_grounded && m_groundSensor.State()) {
             m_grounded = true;
@@ -29,7 +35,7 @@ public class Bandit : MonoBehaviour {
         }
 
         //Check if character just started falling
-        if(m_grounded && !m_groundSensor.State()) {
+        if (m_grounded && !m_groundSensor.State()) {
             m_grounded = false;
             m_animator.SetBool("Grounded", m_grounded);
         }
@@ -46,8 +52,37 @@ public class Bandit : MonoBehaviour {
         // Move
         m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
-        //Set AirSpeed in animator
+        // Set AirSpeed in animator
         m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
+
+        // Wall jumping
+        /**        isTouchingLeft = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x - 0.3f, gameObject.transform.position.y + 0.5f),
+                    new Vector2(0.9f, 0.2f), 0f, TileMap);
+
+                isTouchingRight = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + 0.3f, gameObject.transform.position.y + 0.5f),
+                    new Vector2(0.9f, 0.2f), 0f, TileMap);
+
+                if (isTouchingLeft)
+                {
+                    touchingLeftOrRight = 1;
+                } else if (isTouchingRight)
+                {
+                    touchingLeftOrRight = -1;
+                }
+*/
+
+
+        if (Input.GetKeyDown("space") && m_body2d.velocity.y == 0 && !m_grounded)
+        {
+            wallJumping = true;
+        }
+
+        if (wallJumping)
+        {
+            jump();
+            Invoke("SetWallJumpToFalse", 0.08f);
+            m_grounded = true;
+        }
 
         // -- Handle Animations --
         //Death
@@ -75,11 +110,7 @@ public class Bandit : MonoBehaviour {
 
         //Jump
         else if (Input.GetKeyDown("space") && m_grounded) {
-            m_animator.SetTrigger("Jump");
-            m_grounded = false;
-            m_animator.SetBool("Grounded", m_grounded);
-            m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
-            m_groundSensor.Disable(0.2f);
+            jump();
         }
 
         //Run
@@ -93,5 +124,19 @@ public class Bandit : MonoBehaviour {
         //Idle
         else
             m_animator.SetInteger("AnimState", 0);
+    }
+
+    private void jump()
+    {
+        m_animator.SetTrigger("Jump");
+        m_grounded = false;
+        m_animator.SetBool("Grounded", m_grounded);
+        m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
+        m_groundSensor.Disable(0.2f);
+    }
+
+    private void SetWallJumpToFalse()
+    {
+        wallJumping = false;
     }
 }
