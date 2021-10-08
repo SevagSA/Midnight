@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class Bandit : MonoBehaviour {
 
@@ -12,12 +13,9 @@ public class Bandit : MonoBehaviour {
     private bool                m_grounded = false;
     private bool                m_combatIdle = false;
     private bool                m_isDead = false;
-    private bool isTouchingLeft;
-    private bool isTouchingRight;
     private bool wallJumping;
-    private float touchingLeftOrRight;
-
-    public LayerMask TileMap;
+    
+    public bool is_attacking = false;
 
     // Use this for initialization
     void Start () {
@@ -55,23 +53,6 @@ public class Bandit : MonoBehaviour {
         // Set AirSpeed in animator
         m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
 
-        // Wall jumping
-        /**        isTouchingLeft = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x - 0.3f, gameObject.transform.position.y + 0.5f),
-                    new Vector2(0.9f, 0.2f), 0f, TileMap);
-
-                isTouchingRight = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + 0.3f, gameObject.transform.position.y + 0.5f),
-                    new Vector2(0.9f, 0.2f), 0f, TileMap);
-
-                if (isTouchingLeft)
-                {
-                    touchingLeftOrRight = 1;
-                } else if (isTouchingRight)
-                {
-                    touchingLeftOrRight = -1;
-                }
-*/
-
-
         if (Input.GetKeyDown("space") && m_body2d.velocity.y == 0 && !m_grounded)
         {
             wallJumping = true;
@@ -102,6 +83,8 @@ public class Bandit : MonoBehaviour {
         //Attack
         else if(Input.GetMouseButtonDown(0)) {
             m_animator.SetTrigger("Attack");
+            is_attacking = true;
+            Task.Delay(3).ContinueWith(t => SetAttackingToFalse());
         }
 
         //Change between idle and combat idle
@@ -138,5 +121,10 @@ public class Bandit : MonoBehaviour {
     private void SetWallJumpToFalse()
     {
         wallJumping = false;
+    }
+
+    private void SetAttackingToFalse()
+    {
+        is_attacking = false;   
     }
 }
