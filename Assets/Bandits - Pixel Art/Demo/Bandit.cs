@@ -16,6 +16,7 @@ public class Bandit : MonoBehaviour {
     private bool wallJumping;
     
     public bool is_attacking = false;
+    bool hasDoubleJumped = false;
 
     // Use this for initialization
     void Start () {
@@ -53,6 +54,7 @@ public class Bandit : MonoBehaviour {
         // Set AirSpeed in animator
         m_animator.SetFloat("AirSpeed", m_body2d.velocity.y);
 
+        // Wall Jumping
         if (Input.GetKeyDown("space") && m_body2d.velocity.y == 0 && !m_grounded)
         {
             wallJumping = true;
@@ -60,9 +62,17 @@ public class Bandit : MonoBehaviour {
 
         if (wallJumping)
         {
-            jump();
+            Jump();
             Invoke("SetWallJumpToFalse", 0.08f);
             m_grounded = true;
+        }
+
+        // Double Jumping
+        if (Input.GetKeyDown("space") && !m_grounded && !hasDoubleJumped)
+        {
+            Jump();
+            hasDoubleJumped = true;
+
         }
 
         // -- Handle Animations --
@@ -93,7 +103,8 @@ public class Bandit : MonoBehaviour {
 
         //Jump
         else if (Input.GetKeyDown("space") && m_grounded) {
-            jump();
+            Jump();
+            hasDoubleJumped = false;
         }
 
         //Run
@@ -109,7 +120,7 @@ public class Bandit : MonoBehaviour {
             m_animator.SetInteger("AnimState", 0);
     }
 
-    private void jump()
+    private void Jump()
     {
         m_animator.SetTrigger("Jump");
         m_grounded = false;
