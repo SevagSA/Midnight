@@ -4,22 +4,27 @@ using System.Threading.Tasks;
 
 public class Bandit : MonoBehaviour {
 
-    [SerializeField] float      m_speed = 4.0f;
-    [SerializeField] float      m_jumpForce = 7.5f;
+    static float speed = 4.0f;
+    float m_speed = speed;
+    float m_jumpForce = 7.5f;
 
-    private Animator            m_animator;
-    private Rigidbody2D         m_body2d;
-    private Sensor_Bandit       m_groundSensor;
-    private bool                m_grounded = false;
-    private bool                m_combatIdle = false;
-    private bool                m_isDead = false;
+    private Animator m_animator;
+    private Rigidbody2D m_body2d;
+    private Sensor_Bandit m_groundSensor;
+    private bool m_grounded = false;
+    private bool m_combatIdle = false;
+    private bool m_isDead = false;
     private bool wallJumping;
-    
+
     public bool is_attacking = false;
     bool hasDoubleJumped = false;
 
+    float clicked = 0;
+    float clicktime = 0;
+    float clickdelay = 0.5f;
+
     // Use this for initialization
-    void Start () {
+    void Start() {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
@@ -72,26 +77,51 @@ public class Bandit : MonoBehaviour {
         {
             Jump();
             hasDoubleJumped = true;
-
         }
+/**
+        // Dash
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            clicked++;
+            Debug.Log(clicked);
+            if (clicked == 1) 
+            {
+                clicktime = Time.time;
+            }
+        }
+        if (clicked == 2 && Time.time - clicktime < clickdelay)
+        {
+            Debug.Log("upping");
+            m_speed = speed * 2;
+            clicked = 0;
+            clicktime = 0;
+//            Invoke("ResetCharacterSpeed", 0.5f);
+        }
+        else if (clicked > 2 || Time.time - clicktime > 1)
+        {
+            //Debug.Log("reseting");
+            clicked = 0;
+            ResetCharacterSpeed();
+        }
+        */
 
         // -- Handle Animations --
         //Death
         if (Input.GetKeyDown("e")) {
-            if(!m_isDead)
+            if (!m_isDead)
                 m_animator.SetTrigger("Death");
             else
                 m_animator.SetTrigger("Recover");
 
             m_isDead = !m_isDead;
         }
-            
+
         //Hurt
         else if (Input.GetKeyDown("q"))
             m_animator.SetTrigger("Hurt");
 
         //Attack
-        else if(Input.GetMouseButtonDown(0)) {
+        else if (Input.GetMouseButtonDown(0)) {
             m_animator.SetTrigger("Attack");
             is_attacking = true;
             Task.Delay(3).ContinueWith(t => SetAttackingToFalse());
@@ -104,7 +134,6 @@ public class Bandit : MonoBehaviour {
         //Jump
         else if (Input.GetKeyDown("space") && m_grounded) {
             Jump();
-            hasDoubleJumped = false;
         }
 
         //Run
@@ -124,6 +153,7 @@ public class Bandit : MonoBehaviour {
     {
         m_animator.SetTrigger("Jump");
         m_grounded = false;
+        hasDoubleJumped = false;
         m_animator.SetBool("Grounded", m_grounded);
         m_body2d.velocity = new Vector2(m_body2d.velocity.x, m_jumpForce);
         m_groundSensor.Disable(0.2f);
@@ -136,6 +166,11 @@ public class Bandit : MonoBehaviour {
 
     private void SetAttackingToFalse()
     {
-        is_attacking = false;   
+        is_attacking = false;
     }
+
+    private void ResetCharacterSpeed() {
+        m_speed = speed;
+    }
+
 }
