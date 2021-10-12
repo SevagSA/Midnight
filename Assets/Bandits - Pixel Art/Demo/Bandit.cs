@@ -26,11 +26,16 @@ public class Bandit : MonoBehaviour {
 
     int health = 100;
 
+    private GameMaster gm;
+
     // Use this for initialization
     void Start() {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
+
+        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        transform.position = gm.lastCheckPointPos;
     }
 
     // Update is called once per frame
