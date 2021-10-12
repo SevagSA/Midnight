@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 35096268}
   - component: {fileID: 35096267}
   - component: {fileID: 35096266}
-  - component: {fileID: 35096265}
   m_Layer: 5
   m_Name: CheckpointBtn
   m_TagString: Untagged
@@ -163,18 +162,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0012169, y: -27}
   m_SizeDelta: {x: 265.31, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &35096265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 35096263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7418bc2ca3eb9644d8bf828c79346fa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &35096266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +379,6 @@ GameObject:
   - component: {fileID: 394077704}
   - component: {fileID: 394077703}
   - component: {fileID: 394077702}
-  - component: {fileID: 394077701}
   m_Layer: 5
   m_Name: TitleSceneBtn
   m_TagString: Untagged
@@ -420,18 +406,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00091553, y: -82}
   m_SizeDelta: {x: 265.31, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &394077701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394077699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e452f546537692c4ebf5dbc170e8cedb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &394077702
 MonoBehaviour:
   m_ObjectHideFlags: 0
