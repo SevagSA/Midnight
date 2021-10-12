@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class Bandit : MonoBehaviour {
 
@@ -22,6 +23,8 @@ public class Bandit : MonoBehaviour {
     float clicked = 0;
     float clicktime = 0;
     float clickdelay = 0.5f;
+
+    int health = 100;
 
     // Use this for initialization
     void Start() {
@@ -49,9 +52,13 @@ public class Bandit : MonoBehaviour {
 
         // Swap direction of sprite depending on walk direction
         if (inputX > 0)
+        {
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        }
         else if (inputX < 0)
+        {
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        }
 
         // Move
         m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
@@ -107,18 +114,17 @@ public class Bandit : MonoBehaviour {
 
         // -- Handle Animations --
         //Death
-        if (Input.GetKeyDown("e")) {
+        if (health == 0) {
             if (!m_isDead)
-                m_animator.SetTrigger("Death");
-            else
-                m_animator.SetTrigger("Recover");
-
+            {
+                KillPlayer();
+            }
             m_isDead = !m_isDead;
         }
 
         //Hurt
         else if (Input.GetKeyDown("q"))
-            m_animator.SetTrigger("Hurt");
+            HurtPlayer(10);
 
         //Attack
         else if (Input.GetMouseButtonDown(0)) {
@@ -173,4 +179,15 @@ public class Bandit : MonoBehaviour {
         m_speed = speed;
     }
 
+    void HurtPlayer(int damage)
+    {
+        health -= damage;
+        m_animator.SetTrigger("Hurt");
+    }
+    
+    void KillPlayer()
+    {
+        m_animator.SetTrigger("Death");
+        SceneManager.LoadScene("GameOverScene");
+    }
 }

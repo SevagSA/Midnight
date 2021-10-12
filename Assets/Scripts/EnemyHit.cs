@@ -34,33 +34,6 @@ public class EnemyHit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        /**
-        Bandit bandit = null;
-        if (collision.transform.name == "LightBandit")
-        {
-            bandit = collision.GetComponent<Bandit>();
-            Vector3 banditPosition = collision.transform.position;
-            Vector3 enemyPosition = gameObject.transform.position;
-            
-            if (Vector3.Distance(banditPosition, enemyPosition) < 1.5)
-            {
-                if (bandit.is_attacking)
-                {
-                    Debug.Log("attacking");
-                }
-                else
-                {
-                    Debug.Log("not attacking");
-                }
-            }
-        }
-
-        if (bandit.is_attacking)
-        {
-            Debug.Log("attacking outside");
-        }
-        */
-
         if (collision.transform.name == "LightBandit")
         {
             bandit = collision.GetComponent<Bandit>();
