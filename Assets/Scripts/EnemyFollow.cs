@@ -4,28 +4,59 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
-    public Transform bandit;
-    public float moveSpeed = 5f;
-    private Rigidbody2D rb;
-    private Vector2 movement;
+    Rigidbody2D enemyRigidBody2D;
+    public int UnitsToMove = 5;
+    public float EnemySpeed = 500;
+    public bool _isFacingRight;
+    private float _startPos;
+    private float _endPos;
+
+    public bool _moveRight = true;
 
 
 
 
     void Start()
     {
-
-        rb = this.GetComponent<Rigidbody2D>();
+        enemyRigidBody2D = GetComponent<Rigidbody2D>();
+        _startPos = transform.position.x;
+        _endPos = _startPos + UnitsToMove;
+        _isFacingRight = transform.localScale.x > 0;
+        // rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = bandit.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = angle;
-        direction.Normalize();
-        movement = direction;
+        if (_moveRight)
+        {
+            enemyRigidBody2D.AddForce(Vector2.right * EnemySpeed * Time.deltaTime);
+            if (!_isFacingRight)
+                Flip();
+        }
+
+        if (enemyRigidBody2D.position.x >= _endPos)
+            _moveRight = false;
+
+        if (!_moveRight)
+        {
+            enemyRigidBody2D.AddForce(-Vector2.right * EnemySpeed * Time.deltaTime);
+            if (_isFacingRight)
+                Flip();
+        }
+        if (enemyRigidBody2D.position.x <= _startPos)
+            _moveRight = true;
+        //Vector3 direction = bandit.position - transform.position;
+        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //rb.rotation = angle;
+        //direction.Normalize();
+        //movement = direction;
+    }
+
+    public void Flip()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        _isFacingRight = transform.localScale.x > 0;
     }
     private void FixedUpdate()
     {
@@ -33,6 +64,6 @@ public class EnemyFollow : MonoBehaviour
     }
     void moveCharacter(Vector2 direction)
     {
-        rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+        //rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
     }
 }
