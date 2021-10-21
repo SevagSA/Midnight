@@ -89,32 +89,32 @@ public class Bandit : MonoBehaviour {
             Jump();
             hasDoubleJumped = true;
         }
-/**
-        // Dash
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            clicked++;
-            Debug.Log(clicked);
-            if (clicked == 1) 
-            {
-                clicktime = Time.time;
-            }
-        }
-        if (clicked == 2 && Time.time - clicktime < clickdelay)
-        {
-            Debug.Log("upping");
-            m_speed = speed * 2;
-            clicked = 0;
-            clicktime = 0;
+        /**
+                // Dash
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    clicked++;
+                    Debug.Log(clicked);
+                    if (clicked == 1) 
+                    {
+                        clicktime = Time.time;
+                    }
+                }
+                if (clicked == 2 && Time.time - clicktime < clickdelay)
+                {
+                    Debug.Log("upping");
+                    m_speed = speed * 2;
+                    clicked = 0;
+                    clicktime = 0;
 //            Invoke("ResetCharacterSpeed", 0.5f);
-        }
-        else if (clicked > 2 || Time.time - clicktime > 1)
-        {
-            //Debug.Log("reseting");
-            clicked = 0;
-            ResetCharacterSpeed();
-        }
-        */
+                }
+                else if (clicked > 2 || Time.time - clicktime > 1)
+                {
+                    //Debug.Log("reseting");
+                    clicked = 0;
+                    ResetCharacterSpeed();
+                }
+                */
 
         // -- Handle Animations --
         //Death
@@ -129,6 +129,12 @@ public class Bandit : MonoBehaviour {
         //Hurt
         else if (Input.GetKeyDown("q"))
             HurtPlayer(10);
+
+        else if (Input.GetKeyDown("s") || Input.GetKeyDown("down"))
+        {
+            m_animator.SetTrigger("Death");
+            m_animator.SetTrigger("Recover");
+        }
 
         //Attack
         else if (Input.GetMouseButtonDown(0)) {
