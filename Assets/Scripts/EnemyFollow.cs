@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class EnemyFollow : MonoBehaviour
 {
+
+    public float speed;
+    public float stoppingDistance;
+    private Animator m_animator;
+
+
+    private Transform target;
+
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        m_animator = GetComponent<Animator>();
+
+    }
+
+    void Update()
+    {
+        if (Vector2.Distance(transform.position, target.position) > stoppingDistance) {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        }
+        Debug.Log(m_animator);
+    }
+
+    /**
     Rigidbody2D enemyRigidBody2D;
     public int UnitsToMove = 5;
     public float EnemySpeed = 500;
@@ -66,4 +90,5 @@ public class EnemyFollow : MonoBehaviour
     {
         //rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
     }
+    */
 }
