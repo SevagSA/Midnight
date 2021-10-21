@@ -1,0 +1,19 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# https://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:6aafe5d36a7f25033c6f08187656a497:5aef48c864ee30eb826fe2bacb4875a4:f6b58377141205c113be0dd094517f38$
+#
+:format=40300
+:texture=walking_sheet.png
+:size=512x128
+:pivotpoints=enabled
+:borders=disabled
+:alphahandling=ClearTransparentPixels
+
+1;401;95;32;32; 0.5;0.5; 0;0;0;0; 4;32;0;0;0;0;32;32;32; 2;1;2;3;0;1;3
+2;1;2;137;125; 0.5;0.5; 0;0;0;0; 4;137;0;0;0;0;125;137;125; 2;1;2;3;0;1;3
+3;140;14;125;113; 0.5;0.5; 0;0;0;0; 4;125;0;0;0;0;113;125;113; 2;1;2;3;0;1;3
+4;267;20;132;107; 0.5;0.5; 0;0;0;0; 4;132;0;0;0;0;107;132;107; 2;1;2;3;0;1;3

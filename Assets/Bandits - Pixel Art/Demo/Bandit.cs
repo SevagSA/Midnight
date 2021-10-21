@@ -17,7 +17,6 @@ public class Bandit : MonoBehaviour {
     private bool m_isDead = false;
     private bool wallJumping;
 
-    public bool is_attacking = false;
     bool hasDoubleJumped = false;
 
     float clicked = 0;
@@ -134,8 +133,6 @@ public class Bandit : MonoBehaviour {
         //Attack
         else if (Input.GetMouseButtonDown(0)) {
             m_animator.SetTrigger("Attack");
-            is_attacking = true;
-            Task.Delay(3).ContinueWith(t => SetAttackingToFalse());
         }
 
         //Change between idle and combat idle
@@ -173,11 +170,6 @@ public class Bandit : MonoBehaviour {
     private void SetWallJumpToFalse()
     {
         wallJumping = false;
-    }
-
-    private void SetAttackingToFalse()
-    {
-        is_attacking = false;
     }
 
     private void ResetCharacterSpeed() {
