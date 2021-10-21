@@ -23,11 +23,7 @@ public class EnemyHit : MonoBehaviour
             if (Vector3.Distance(banditPosition, enemyPosition) < 1.5 &&
                 Input.GetMouseButtonDown(0))
             {
-                Debug.Log("attacking");
                 HandleEnemyAttacked();
-            } else
-            {
-                Debug.Log("not attacking");
             }
         }
     }

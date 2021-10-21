@@ -22,7 +22,6 @@ public class EnemyFollow : MonoBehaviour
     void Update()
     {
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
-        Debug.Log(enemyToPlayerDistance + " | " + playerFollowRange + " | " + stoppingDistance);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance) {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         }
