@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Bandit : MonoBehaviour {
 
+
+
     static float speed = 4.0f;
     float m_speed = speed;
     float m_jumpForce = 7.5f;
@@ -192,5 +194,13 @@ public class Bandit : MonoBehaviour {
     {
         m_animator.SetTrigger("Death");
         SceneManager.LoadScene("GameOverScene");
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.name == "Idle_1")
+        {
+            HurtPlayer(1);
+            m_body2d.AddForce(new Vector2(-3000f, 100f));
+        }
     }
 }
