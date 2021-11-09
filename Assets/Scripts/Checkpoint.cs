@@ -17,6 +17,8 @@ public class Checkpoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gm.lastCheckPointPos = transform.position;
+            GameObject pillar = GameObject.Find("TX Village Props Banner");
+            gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
         }
     }
 }
