@@ -21,4 +21,10 @@ public class Checkpoint : MonoBehaviour
             gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.green;
         }
     }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log(other);
+    }
+
 }
