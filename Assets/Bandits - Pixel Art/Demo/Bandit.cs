@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Bandit : MonoBehaviour {
 
-
-
     static float speed = 4.0f;
     float m_speed = speed;
     float m_jumpForce = 7.5f;
+    public GameObject healthBar;
 
     private Animator m_animator;
     private Rigidbody2D m_body2d;
@@ -91,32 +90,6 @@ public class Bandit : MonoBehaviour {
             Jump();
             hasDoubleJumped = true;
         }
-        /**
-                // Dash
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    clicked++;
-                    Debug.Log(clicked);
-                    if (clicked == 1) 
-                    {
-                        clicktime = Time.time;
-                    }
-                }
-                if (clicked == 2 && Time.time - clicktime < clickdelay)
-                {
-                    Debug.Log("upping");
-                    m_speed = speed * 2;
-                    clicked = 0;
-                    clicktime = 0;
-//            Invoke("ResetCharacterSpeed", 0.5f);
-                }
-                else if (clicked > 2 || Time.time - clicktime > 1)
-                {
-                    //Debug.Log("reseting");
-                    clicked = 0;
-                    ResetCharacterSpeed();
-                }
-                */
 
         // -- Handle Animations --
         //Death
@@ -127,10 +100,6 @@ public class Bandit : MonoBehaviour {
             }
             m_isDead = !m_isDead;
         }
-
-        //Hurt
-        else if (Input.GetKeyDown("q"))
-            HurtPlayer(10);
 
         else if (Input.GetKeyDown("s") || Input.GetKeyDown("down"))
         {
@@ -186,6 +155,7 @@ public class Bandit : MonoBehaviour {
 
     void HurtPlayer(int damage)
     {
+        healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
         health -= damage;
         m_animator.SetTrigger("Hurt");
     }
@@ -195,11 +165,12 @@ public class Bandit : MonoBehaviour {
         m_animator.SetTrigger("Death");
         SceneManager.LoadScene("GameOverScene");
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.name == "Idle_1")
         {
-            HurtPlayer(1);
+            HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
     }
