@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class EnemyHit : MonoBehaviour
 {
@@ -9,10 +11,14 @@ public class EnemyHit : MonoBehaviour
     private Vector3 enemyPosition;
     private int enemyHealth = 3;
 
+    private TMP_Text goldAmnt;
+    public int enemeyKillGoldAmnt = 10;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -44,6 +50,8 @@ public class EnemyHit : MonoBehaviour
         if (enemyHealth == 0)
         {
             Destroy(gameObject);
+            Debug.Log(goldAmnt.text);
+            goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }
 }

@@ -171,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec23f3a1e8b8184b82b9ffa37e81e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemeyKillGoldAmnt: 10
 --- !u!1 &5989619659121345047
 GameObject:
   m_ObjectHideFlags: 0
