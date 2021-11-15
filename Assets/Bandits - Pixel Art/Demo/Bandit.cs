@@ -159,7 +159,15 @@ public class Bandit : MonoBehaviour {
         health -= damage;
         m_animator.SetTrigger("Hurt");
     }
-    
+    void HealPlayer(int addedHealth)
+    {
+        if (health != 100)
+        {
+            healthBar.transform.localScale = new Vector3((health + addedHealth) * 0.01f, 1f);
+            health += addedHealth;
+        }
+
+    }
     void KillPlayer()
     {
         m_animator.SetTrigger("Death");
@@ -172,6 +180,16 @@ public class Bandit : MonoBehaviour {
         {
             HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
+        }
+        if (collision.transform.name == "HeavyBandit")
+        {
+            HurtPlayer(10);
+            m_body2d.AddForce(new Vector2(-3000f, 100f));
+        }
+        if (collision.transform.name == "Cube")
+        {
+            HealPlayer(10);
+            Destroy(collision.gameObject);
         }
     }
 }
