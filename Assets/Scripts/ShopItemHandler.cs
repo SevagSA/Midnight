@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShopItemHandler : MonoBehaviour
+{
+
+    //ShopItem item;
+
+    void Start()
+    {
+        //goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    /**
+     * Have a JSON file where you would have all of the info about each item
+     *  so, the image name (all images will be in the same directory so you just need the name of the file),
+     *  the name of the item, the description, and the price.
+     *  
+     *  
+     *  Then, create a class for an Item object so you can have all of the params of it
+     *      (image, description, price, name of item, etc)
+     *   
+     *   Then, you would have a Item object initialized as a global param (check the line before Start())
+     *   
+     *   Once you get the itemId from the GetItemData, you're going to fetch the corresponding JSON object
+     *   and load that data into the empty ShopItem object.
+     *   
+     *   Then, you will get/select all of the GameObjects contained in the IndividualItem panel
+     *      (i.e. the descrioptiopn, image, price, etxc.)
+     *  and you will load the appropriate data into those slots -> descript.SetText(shopItem.description) (for example)
+     *  
+     *  Them, make sure that when the user clicks on the "buy" button, the item will be aqcuired by the player 
+     *      (this may mena that the shopItem object and the JSON object need to contain something that
+     *      identifies what the power up is.)
+     *  and that the correct amount of gold will be reduced.
+     * 
+     */
+    void GetItemData(string itemId)
+    {
+
+    }
+}
