@@ -1,0 +1,12 @@
+{ 
+
+    "Health": {
+        "description": "Receive an additional 10 health by pruchasing this item",
+        "price": 25
+    },
+
+    "Jump": {
+        "description": "Jump higher than before for a limited amount of time",
+        "price": 20
+    }
+}
