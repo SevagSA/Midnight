@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GM
+  - HealthPickup
   layers:
   - Default
   - TransparentFX

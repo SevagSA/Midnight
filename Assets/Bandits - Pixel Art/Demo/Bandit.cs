@@ -186,7 +186,7 @@ public class Bandit : MonoBehaviour {
             HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
-        if (collision.transform.name == "Cube")
+        if (collision.transform.name == "HealthPickUp")
         {
             HealPlayer(10);
             Destroy(collision.gameObject);
