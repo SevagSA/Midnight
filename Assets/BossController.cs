@@ -14,10 +14,12 @@ public class BossController : MonoBehaviour
     private Transform target;
     private float enemyToPlayerDistance;
 
+    public GameObject enemyHealthBar;
+
     private Bandit bandit = null;
     private Vector3 banditPosition;
     private Vector3 enemyPosition;
-    private int enemyHealth = 3;
+    private int enemyHealth = 100;
 
     private TMP_Text goldAmnt;
     public int enemeyKillGoldAmnt = 10;
@@ -41,9 +43,10 @@ public class BossController : MonoBehaviour
         }
         if (bandit != null)
         {
-            if (Vector3.Distance(banditPosition, enemyPosition) < 1.5 &&
+            if (Vector3.Distance(banditPosition, enemyPosition) < 5.5 &&
                 Input.GetMouseButtonDown(0))
             {
+                m_animator.SetTrigger("Hurt");
                 HandleEnemyAttacked();
             }
         }
@@ -60,12 +63,20 @@ public class BossController : MonoBehaviour
 
     private void HandleEnemyAttacked()
     {
-        enemyHealth--;
+        
+        enemyHealthBar.transform.localScale = new Vector3((enemyHealth - 1) * 0.01f, 1f);
+        
+        enemyHealth -= 5;
+       
         if (enemyHealth == 0)
         {
+            m_animator.SetTrigger("Death");
+           // yield WaitForSeconds(0.2f);
             Destroy(gameObject);
             Debug.Log(goldAmnt.text);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }
+   
+    
 }
