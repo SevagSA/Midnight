@@ -58,6 +58,6 @@ public class ShopItemHandler : MonoBehaviour
         string description = o1[itemName]["description"].ToString();
         Debug.Log(description + " | " + description.GetType());
 
-        shopItem = new ShopItem(itemName, description, Int32.Parse(o1[itemName]["price"]));
+        //shopItem = new ShopItem(itemName, description, Int32.Parse(o1[itemName]["price"]));
     }
 }
