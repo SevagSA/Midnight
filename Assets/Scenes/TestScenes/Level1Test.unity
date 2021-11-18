@@ -695,6 +695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7bbf0de342f0464ea18efa232f8ea72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPanel: {fileID: 264545101}
+  itemImage: {fileID: 541899133}
+  itemPrice: {fileID: 1827069489}
+  itemDescription: {fileID: 1188134119}
 --- !u!1001 &379423652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19247,7 +19251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 477.1747, y: -192.22011}
+  m_AnchoredPosition: {x: 477.1747, y: -203.64998}
   m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1068875217
@@ -19694,6 +19698,7 @@ MonoBehaviour:
   speed: 1
   stoppingDistance: 2
   playerFollowRange: 5
+  enemyHealthBar: {fileID: 0}
   enemeyKillGoldAmnt: 100
 --- !u!1001 &1421692703
 PrefabInstance:
@@ -42212,7 +42217,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1505586409}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 370643222}
+        m_TargetAssemblyTypeName: ShopItemHandler, Assembly-CSharp
+        m_MethodName: CloseItemPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1505586409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52772,7 +52789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 257.1747, y: -192.22011}
+  m_AnchoredPosition: {x: 257.1747, y: -203.64998}
   m_SizeDelta: {x: 200, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921134764

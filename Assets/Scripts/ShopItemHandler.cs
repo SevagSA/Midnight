@@ -4,24 +4,23 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System;
+using UnityEngine.UI;
 
 
 public class ShopItemHandler : MonoBehaviour
 {
 
     ShopItem shopItem;
-    public GameObject indivItemPanel;
 
-    void Start()
-    {
-        //goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-    }
+    public GameObject itemPanel;
+    public GameObject itemImage;
+    public GameObject itemPrice;
+    public GameObject itemDescription;
+
+    void Start() { }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Update() { }
 
     /**
      * Have a JSON file where you would have all of the info about each item
@@ -36,11 +35,11 @@ public class ShopItemHandler : MonoBehaviour
      *   
      *   Once you get the itemName from the GetItemData, you're going to fetch the corresponding JSON object
      *   and load that data into the empty ShopItem object.
-     
-     ---------------------------------DONE-------------------------------------
-     
-     *   Then, you will get/select all of the GameObjects contained in the IndividualItem panel
+     *   
+     *   Then, you will get all of the GameObjects contained in the IndividualItem panel
      *      (i.e. the descrioptiopn, image, price, etxc.)
+     *           ---------------------------------DONE-------------------------------------
+
      *  and you will load the appropriate data into those slots -> descript.SetText(shopItem.description) (for example)
      *  
      *  Then, make sure that when he user clicks on the "buy" button, the item will be aqcuired by the player t
@@ -54,10 +53,26 @@ public class ShopItemHandler : MonoBehaviour
         Debug.Log(itemName);
 
         // Get JSON object of item
-        JObject o1 = JObject.Parse(File.ReadAllText(@"Assets\DataFiles\shopItems.json"));
-        string description = o1[itemName]["description"].ToString();
-        Debug.Log(description + " | " + description.GetType());
+        JObject o = JObject.Parse(File.ReadAllText(@"Assets\DataFiles\shopItems.json"));
+        
+        int price = Int32.Parse(o[itemName]["price"].ToString());
+        string description = o[itemName]["description"].ToString();
+        
+        shopItem = new ShopItem(itemName, description, price);
 
-        //shopItem = new ShopItem(itemName, description, Int32.Parse(o1[itemName]["price"]));
+        Debug.Log(shopItem.name + " | " + shopItem.description + " | " + shopItem.price);
+
+        itemPanel.SetActive(true);
+
+        Debug.Log(Resources.Load<Sprite>("Assets/Sprites/ShopItems/" + itemName));
+        itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ShopItems/" + itemName);
+        itemPrice.GetComponent<Text>().text = price.ToString() + " Gold";
+        itemDescription.GetComponent<Text>().text = description;
     }
+
+    public void CloseItemPanel()
+    {
+        itemPanel.SetActive(false);
+    }
+
 }
