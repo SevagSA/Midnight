@@ -40,7 +40,14 @@ public class BossController : MonoBehaviour
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            m_animator.SetInteger("AnimState", 2);
         }
+        if (enemyToPlayerDistance < stoppingDistance)
+        {
+
+            m_animator.SetInteger("AnimState", 1);
+        }
+       
         if (bandit != null)
         {
             if (Vector3.Distance(banditPosition, enemyPosition) < 5.5 &&
@@ -71,12 +78,18 @@ public class BossController : MonoBehaviour
         if (enemyHealth == 0)
         {
             m_animator.SetTrigger("Death");
-           // yield WaitForSeconds(0.2f);
-            Destroy(gameObject);
+           StartCoroutine(DelayAction(1f));
+            //Destroy(gameObject);
             Debug.Log(goldAmnt.text);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }
+    IEnumerator DelayAction(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
+    }
+
    
     
 }
