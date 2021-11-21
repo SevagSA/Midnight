@@ -14,6 +14,8 @@ public class BossController : MonoBehaviour
     private Transform target;
     private float enemyToPlayerDistance;
 
+    private Rigidbody2D m_body2d;
+
     public GameObject enemyHealthBar;
 
     private Bandit bandit = null;
@@ -27,6 +29,8 @@ public class BossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        m_body2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         m_animator = GetComponent<Animator>();
         goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
@@ -42,19 +46,21 @@ public class BossController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
         }
-        if (enemyToPlayerDistance < stoppingDistance)
-        {
+         if (enemyToPlayerDistance < stoppingDistance)
+         {
 
-            m_animator.SetInteger("AnimState", 1);
-        }
+             m_animator.SetTrigger("Attack");
+         }
        
+     
+
         if (bandit != null)
         {
             if (Vector3.Distance(banditPosition, enemyPosition) < 5.5 &&
                 Input.GetMouseButtonDown(0))
             {
-                m_animator.SetTrigger("Hurt");
-                HandleEnemyAttacked();
+                StartCoroutine(BossHurt(0.4f));
+
             }
         }
     }
@@ -79,6 +85,7 @@ public class BossController : MonoBehaviour
         {
             m_animator.SetTrigger("Death");
            StartCoroutine(DelayAction(1f));
+
             //Destroy(gameObject);
             Debug.Log(goldAmnt.text);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
@@ -89,7 +96,23 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
     }
+    IEnumerator BossHurt(float time)
+    {
+        yield return new WaitForSeconds(time);
+        m_animator.SetTrigger("Hurt");
+        HandleEnemyAttacked();
 
-   
-    
+        if (transform.position.x > target.position.x)
+        {
+            m_body2d.AddForce(new Vector2(300f, 100f));
+        }
+        else
+        {
+            m_body2d.AddForce(new Vector2(-300f, 100f));
+        }
+        
+    }
+
+
+
 }
