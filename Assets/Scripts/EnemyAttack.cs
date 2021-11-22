@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour
     private Vector3 banditPosition;
     private Vector3 enemyPosition;
     private int banditHealth = 5;
+
     // Start is called before the first frame update
     void Start()
     {

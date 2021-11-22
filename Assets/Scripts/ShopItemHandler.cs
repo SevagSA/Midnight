@@ -5,19 +5,22 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class ShopItemHandler : MonoBehaviour
 {
-
-    ShopItem shopItem;
 
     public GameObject itemPanel;
     public GameObject itemImage;
     public GameObject itemPrice;
     public GameObject itemDescription;
 
-    void Start() { }
+    public TMP_Text goldAmnt;
+
+    void Start() {
+        goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+    }
 
     // Update is called once per frame
     void Update() { }
@@ -38,11 +41,10 @@ public class ShopItemHandler : MonoBehaviour
      *   
      *   Then, you will get all of the GameObjects contained in the IndividualItem panel
      *      (i.e. the descrioptiopn, image, price, etxc.)
-     *           ---------------------------------DONE-------------------------------------
-
+     *      
      *  and you will load the appropriate data into those slots -> descript.SetText(shopItem.description) (for example)
-     *  
-     *  Then, make sure that when he user clicks on the "buy" button, the item will be aqcuired by the player t
+        ---------------------------------DONE-------------------------------------
+    *  Then, make sure that when he user clicks on the "buy" button, the item will be aqcuired by the player t
      *      (this may mena that the shopItem object and the JSON object need to contain something that
      *      identifies what the power up is.)
      *  and that the correct amount of gold will be reduced.
@@ -57,14 +59,9 @@ public class ShopItemHandler : MonoBehaviour
         
         int price = Int32.Parse(o[itemName]["price"].ToString());
         string description = o[itemName]["description"].ToString();
-        
-        shopItem = new ShopItem(itemName, description, price);
-
-        Debug.Log(shopItem.name + " | " + shopItem.description + " | " + shopItem.price);
 
         itemPanel.SetActive(true);
 
-        Debug.Log(Resources.Load<Sprite>("Assets/Sprites/ShopItems/" + itemName));
         itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ShopItems/" + itemName);
         itemPrice.GetComponent<Text>().text = price.ToString() + " Gold";
         itemDescription.GetComponent<Text>().text = description;
@@ -75,4 +72,8 @@ public class ShopItemHandler : MonoBehaviour
         itemPanel.SetActive(false);
     }
 
+    public void BuyItem()
+    {
+        // TODO
+    }
 }

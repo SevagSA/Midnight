@@ -184,7 +184,15 @@ public class Bandit : MonoBehaviour {
         if (collision.transform.name == "HeavyBandit")
         {
             HurtPlayer(10);
-            m_body2d.AddForce(new Vector2(-3000f, 100f));
+            if (transform.position.x > collision.transform.position.x)
+            {
+                m_body2d.AddForce(new Vector2(3000f, 100f));
+            }
+            else
+            {
+                m_body2d.AddForce(new Vector2(-3000f, 100f));
+            }
+           // m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
         if (collision.transform.name == "HealthPickUp")
         {
