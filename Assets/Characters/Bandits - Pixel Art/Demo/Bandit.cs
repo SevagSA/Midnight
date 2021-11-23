@@ -25,11 +25,21 @@ public class Bandit : MonoBehaviour {
     float clickdelay = 0.5f;
 
     int health = 100;
+    /*
+    public int maxHealth = 100;
+    public int health = 100;
+    public int currentHealth;
+    public HealthBar healthB;
+    */
 
     private GameMaster gm;
 
     // Use this for initialization
     void Start() {
+        /*
+        currentHealth = maxHealth;
+        healthB.SetMaxHealth(maxHealth);
+        */
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
@@ -155,8 +165,13 @@ public class Bandit : MonoBehaviour {
 
     void HurtPlayer(int damage)
     {
-        healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
+        /*
+        currentHealth -= damage;
+        healthB.SetHealth(currentHealth);
+        */
+     /*   healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
         health -= damage;
+     */
         m_animator.SetTrigger("Hurt");
     }
     void HealPlayer(int addedHealth)

@@ -60,6 +60,7 @@ public class ShopItemHandler : MonoBehaviour
         int price = Int32.Parse(o[itemName]["price"].ToString());
         string description = o[itemName]["description"].ToString();
 
+
         itemPanel.SetActive(true);
 
         itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ShopItems/" + itemName);
@@ -75,5 +76,8 @@ public class ShopItemHandler : MonoBehaviour
     public void BuyItem()
     {
         // TODO
+
+      //  shopItem = new ShopItem(itemName, description, Int32.Parse(o1[itemName]["price"]));
+
     }
 }
