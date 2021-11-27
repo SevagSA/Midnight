@@ -1,12 +1,26 @@
 {
 
-  "Health": {
+  "Health10": {
     "description": "Receive an additional 10 health by pruchasing this item",
-    "price": 25
+    "price": 25,
+    "healthAmount": 0.1
   },
 
-  "Jump": {
-    "description": "Jump higher than before for a limited amount of time",
-    "price": 20
+  "Health20": {
+    "description": "Receive an additional 20 health by pruchasing this item",
+    "price": 35,
+    "healthAmount": 0.2
+  },
+
+  "Health30": {
+    "description": "Receive an additional 30 health by pruchasing this item",
+    "price": 50,
+    "healthAmount": 0.3
+  },
+
+  "Health40": {
+    "description": "Receive an additional 40 health by pruchasing this item",
+    "price": 70,
+    "healthAmount": 0.4
   }
 }
