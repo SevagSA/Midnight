@@ -27,7 +27,7 @@ public class BossController : MonoBehaviour
     private TMP_Text goldAmnt;
     public int enemeyKillGoldAmnt = 10;
 
-    public bool facingRight = false;
+    private bool facingRight = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,6 @@ public class BossController : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         m_animator = GetComponent<Animator>();
         goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-
     }
 
     // Update is called once per frame
@@ -53,7 +52,6 @@ public class BossController : MonoBehaviour
         banditPosition = target.transform.position;
         enemyPosition = gameObject.transform.position;
 
-<<<<<<< HEAD:Assets/BossController.cs
         if (enemyPosition.x < banditPosition.x && facingRight)
         {
             Flip();
@@ -64,25 +62,21 @@ public class BossController : MonoBehaviour
             Flip();
         }
     
-
-    enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
-        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance < stoppingDistance)
-=======
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
->>>>>>> 65ea1d67405930d1b49d3b6526a700a60da2e1d9:Assets/Scripts/BossController.cs
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
-            Debug.Log("in range");
         }
 
         //if (enemyToPlayerDistance < stoppingDistance)
-        // {
+        //{
         //    m_animator.SetTrigger("Attack");
-        // }
-       
-     
+        //    if (Input.GetMouseButtonDown(0))
+        //    {
+        //        StartCoroutine(BossHurt(0.4f));
+        //    }
+        //}
 
         if (bandit != null)
         {
@@ -121,11 +115,13 @@ public class BossController : MonoBehaviour
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }
+
     IEnumerator DelayAction(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
     }
+
     IEnumerator BossHurt(float time)
     {
         yield return new WaitForSeconds(time);
@@ -134,11 +130,11 @@ public class BossController : MonoBehaviour
 
         if (transform.position.x > target.position.x)
         {
-            m_body2d.AddForce(new Vector2(400f, 100f));
+            m_body2d.AddForce(new Vector2(200f, 100f));
         }
         else
         {
-            m_body2d.AddForce(new Vector2(-400f, 100f));
+            m_body2d.AddForce(new Vector2(-200f, 100f));
         }
         
     }

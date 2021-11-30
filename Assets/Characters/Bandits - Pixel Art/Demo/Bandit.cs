@@ -181,14 +181,13 @@ public class Bandit : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Enemy"))
         {
-                HurtPlayer(10);
+            HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
         if (collision.transform.name == "HeavyBandit")
         {
-            // StartCoroutine(DelayAction(1f));
             HurtPlayer(10);
-                 if (transform.position.x > collision.transform.position.x)
+            if (transform.position.x > collision.transform.position.x)
             {
                 m_body2d.AddForce(new Vector2(3000f, 100f));
             }
