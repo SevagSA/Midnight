@@ -53,6 +53,7 @@ public class BossController : MonoBehaviour
         banditPosition = target.transform.position;
         enemyPosition = gameObject.transform.position;
 
+<<<<<<< HEAD:Assets/BossController.cs
         if (enemyPosition.x < banditPosition.x && facingRight)
         {
             Flip();
@@ -66,22 +67,20 @@ public class BossController : MonoBehaviour
 
     enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance < stoppingDistance)
+=======
+        enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
+        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
+>>>>>>> 65ea1d67405930d1b49d3b6526a700a60da2e1d9:Assets/Scripts/BossController.cs
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
             Debug.Log("in range");
         }
-        if (playerFollowRange < enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-            m_animator.SetInteger("AnimState", 2);
-            Debug.Log("Not in range");
-        }
-        if (enemyToPlayerDistance < stoppingDistance)
-         {
 
-            m_animator.SetTrigger("Attack");
-         }
+        //if (enemyToPlayerDistance < stoppingDistance)
+        // {
+        //    m_animator.SetTrigger("Attack");
+        // }
        
      
 
