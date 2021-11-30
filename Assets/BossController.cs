@@ -11,6 +11,7 @@ public class BossController : MonoBehaviour
     public float playerFollowRange;
 
     private Animator m_animator;
+    private SpriteRenderer spriteRenderer;
     private Transform target;
     private float enemyToPlayerDistance;
 
@@ -26,9 +27,12 @@ public class BossController : MonoBehaviour
     private TMP_Text goldAmnt;
     public int enemeyKillGoldAmnt = 10;
 
+    public bool facingRight = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>(); 
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         banditPosition = target.transform.position;
@@ -49,7 +53,18 @@ public class BossController : MonoBehaviour
         banditPosition = target.transform.position;
         enemyPosition = gameObject.transform.position;
 
-        enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
+        if (enemyPosition.x < banditPosition.x && facingRight)
+        {
+            Flip();
+        }
+           
+        if (enemyPosition.x > banditPosition.x && !facingRight)
+        {
+            Flip();
+        }
+    
+
+    enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance < stoppingDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
@@ -128,7 +143,14 @@ public class BossController : MonoBehaviour
         }
         
     }
-
+    void Flip()
+    {
+        
+        facingRight = !facingRight;
+        Vector3 tmpScale = gameObject.transform.localScale;
+        tmpScale.x *= -1;
+        gameObject.transform.localScale = tmpScale;
+    }
 
 
 }
