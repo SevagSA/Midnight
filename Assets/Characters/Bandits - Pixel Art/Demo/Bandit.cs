@@ -179,9 +179,9 @@ public class Bandit : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.name == "Idle_1")
+        if (collision.transform.CompareTag("Enemy"))
         {
-            HurtPlayer(10);
+                HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
         if (collision.transform.name == "HeavyBandit")
