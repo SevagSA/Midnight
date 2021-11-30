@@ -11,6 +11,7 @@ public class BossController : MonoBehaviour
     public float playerFollowRange;
 
     private Animator m_animator;
+    private SpriteRenderer spriteRenderer;
     private Transform target;
     private float enemyToPlayerDistance;
 
@@ -26,9 +27,12 @@ public class BossController : MonoBehaviour
     private TMP_Text goldAmnt;
     public int enemeyKillGoldAmnt = 10;
 
+    public bool facingRight = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>(); 
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
         banditPosition = target.transform.position;
@@ -49,8 +53,24 @@ public class BossController : MonoBehaviour
         banditPosition = target.transform.position;
         enemyPosition = gameObject.transform.position;
 
+<<<<<<< HEAD:Assets/BossController.cs
+        if (enemyPosition.x < banditPosition.x && facingRight)
+        {
+            Flip();
+        }
+           
+        if (enemyPosition.x > banditPosition.x && !facingRight)
+        {
+            Flip();
+        }
+    
+
+    enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
+        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance < stoppingDistance)
+=======
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
+>>>>>>> 65ea1d67405930d1b49d3b6526a700a60da2e1d9:Assets/Scripts/BossController.cs
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
@@ -122,7 +142,14 @@ public class BossController : MonoBehaviour
         }
         
     }
-
+    void Flip()
+    {
+        
+        facingRight = !facingRight;
+        Vector3 tmpScale = gameObject.transform.localScale;
+        tmpScale.x *= -1;
+        gameObject.transform.localScale = tmpScale;
+    }
 
 
 }
