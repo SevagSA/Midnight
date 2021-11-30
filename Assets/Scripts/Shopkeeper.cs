@@ -34,13 +34,11 @@ public class Shopkeeper : MonoBehaviour
         {
             if (Input.GetKey("t"))
             {
-                Debug.Log("open shop menu");
                 shopPanel.SetActive(true);
                 closeShopText.SetActive(true);
             }
             else
             {
-                Debug.Log("Press the 't' key while walking through the shop to open it.");
                 openShopText.SetActive(true);
             }
         }

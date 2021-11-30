@@ -50,7 +50,6 @@ public class EnemyHit : MonoBehaviour
         if (enemyHealth == 0)
         {
             Destroy(gameObject);
-            Debug.Log(goldAmnt.text);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }

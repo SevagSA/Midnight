@@ -56,7 +56,7 @@ public class BossController : MonoBehaviour
         if (enemyToPlayerDistance < stoppingDistance)
          {
 
-             m_animator.SetTrigger("Attack");
+            m_animator.SetTrigger("Attack");
          }
        
      

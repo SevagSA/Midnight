@@ -10,61 +10,36 @@ using TMPro;
 
 public class ShopItemHandler : MonoBehaviour
 {
+    ShopItem shopItem = new ShopItem();
 
     public GameObject itemPanel;
     public GameObject itemImage;
     public GameObject itemPrice;
     public GameObject itemDescription;
 
-    public TMP_Text goldAmnt;
-
     void Start() {
-        goldAmnt = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update() { }
 
-    /**
-     * Have a JSON file where you would have all of the info about each item
-     *  so, the image name (all images will be in the same directory so you just need the name of the file),
-     *  the name of the item, the description, and the price.
-     *  
-     *  
-     *  Then, create a class for an Item object so you can have all of the params of it
-     *      (image, description, price, name of item, etc)
-     *   
-     *   Then, you would have a Item object initialized as a global param (check the line before Start())
-     *   
-     *   Once you get the itemName from the GetItemData, you're going to fetch the corresponding JSON object
-     *   and load that data into the empty ShopItem object.
-     *   
-     *   Then, you will get all of the GameObjects contained in the IndividualItem panel
-     *      (i.e. the descrioptiopn, image, price, etxc.)
-     *      
-     *  and you will load the appropriate data into those slots -> descript.SetText(shopItem.description) (for example)
-        ---------------------------------DONE-------------------------------------
-    *  Then, make sure that when he user clicks on the "buy" button, the item will be aqcuired by the player t
-     *      (this may mena that the shopItem object and the JSON object need to contain something that
-     *      identifies what the power up is.)
-     *  and that the correct amount of gold will be reduced.
-     * 
-     */
+
     public void GetItemData(String itemName)
     {
-        Debug.Log(itemName);
+        shopItem.name = itemName;
 
         // Get JSON object of item
         JObject o = JObject.Parse(File.ReadAllText(@"Assets\DataFiles\shopItems.json"));
         
-        int price = Int32.Parse(o[itemName]["price"].ToString());
-        string description = o[itemName]["description"].ToString();
+        shopItem.price = Int32.Parse(o[shopItem.name]["price"].ToString());
+        shopItem.description = o[shopItem.name]["description"].ToString();
+        shopItem.healthAmount = float.Parse(o[shopItem.name]["healthAmount"].ToString());
 
         itemPanel.SetActive(true);
 
-        itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ShopItems/" + itemName);
-        itemPrice.GetComponent<Text>().text = price.ToString() + " Gold";
-        itemDescription.GetComponent<Text>().text = description;
+        itemImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ShopItems/" + shopItem.name);
+        itemPrice.GetComponent<Text>().text = shopItem.price.ToString() + " Gold";
+        itemDescription.GetComponent<Text>().text = shopItem.description;
     }
 
     public void CloseItemPanel()
@@ -74,6 +49,37 @@ public class ShopItemHandler : MonoBehaviour
 
     public void BuyItem()
     {
-        // TODO
+
+        /**
+        DONE Make sure player has enough gold
+        DONE reduce price from total
+        DONE get currentHealth
+        DONE add healthAmount to currentHealth
+        DONE Make sure health max amouunt (100) is respected after addition
+        */
+        
+        TextMeshProUGUI goldAmntHolder;
+        int goldAmnt;
+        
+        goldAmntHolder = GameObject.Find("GoldAmntHolder").transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        goldAmnt = Int32.Parse(goldAmntHolder.GetParsedText());
+        
+        GameObject currentHealth = GameObject.FindWithTag("PlayerHealthBar");
+        Vector3 currentHealthScale = currentHealth.transform.localScale;
+        
+        float newHealthAmnt = currentHealthScale.x + shopItem.healthAmount;
+        Debug.Log(newHealthAmnt);
+        if (newHealthAmnt > 1) {
+            newHealthAmnt = newHealthAmnt - (newHealthAmnt % 1);
+        }
+        if (shopItem.price <= goldAmnt) {
+            goldAmnt -= shopItem.price;
+            goldAmntHolder.SetText(goldAmnt.ToString());
+            currentHealthScale.x = newHealthAmnt;
+            currentHealth.transform.localScale = currentHealthScale;
+            CloseItemPanel();
+        } else {
+            Debug.Log("Not enough gold!");
+        }
     }
 }
