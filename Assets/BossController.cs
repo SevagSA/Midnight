@@ -41,12 +41,19 @@ public class BossController : MonoBehaviour
     void Update()
     {
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
-        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
+        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance < stoppingDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
+            Debug.Log("in range");
         }
-         if (enemyToPlayerDistance < stoppingDistance)
+        if (playerFollowRange < enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            m_animator.SetInteger("AnimState", 2);
+            Debug.Log("Not in range");
+        }
+        if (enemyToPlayerDistance < stoppingDistance)
          {
 
              m_animator.SetTrigger("Attack");
