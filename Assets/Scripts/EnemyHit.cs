@@ -26,7 +26,7 @@ public class EnemyHit : MonoBehaviour
     {
         if (bandit != null)
         {
-            if (Vector3.Distance(banditPosition, enemyPosition) < 1.5 &&
+            if (Vector3.Distance(banditPosition, enemyPosition) < 2 &&
                 Input.GetMouseButtonDown(0))
             {
                 HandleEnemyAttacked();
