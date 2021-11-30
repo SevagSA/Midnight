@@ -10,6 +10,8 @@ public class Bandit : MonoBehaviour {
     float m_jumpForce = 7.5f;
     public GameObject healthBar;
 
+    private Transform target;
+
     private Animator m_animator;
     private Rigidbody2D m_body2d;
     private Sensor_Bandit m_groundSensor;
@@ -25,7 +27,7 @@ public class Bandit : MonoBehaviour {
     float clickdelay = 0.5f;
 
     int health = 100;
-
+   
     private GameMaster gm;
 
     // Use this for initialization
@@ -34,6 +36,7 @@ public class Bandit : MonoBehaviour {
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
 
+        target = GameObject.FindGameObjectWithTag("HeavyBandit").GetComponent<Transform>();
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         transform.position = gm.lastCheckPointPos;
     }
@@ -183,16 +186,16 @@ public class Bandit : MonoBehaviour {
         }
         if (collision.transform.name == "HeavyBandit")
         {
+            // StartCoroutine(DelayAction(1f));
             HurtPlayer(10);
-            if (transform.position.x > collision.transform.position.x)
+                 if (transform.position.x > collision.transform.position.x)
             {
                 m_body2d.AddForce(new Vector2(3000f, 100f));
             }
             else
             {
                 m_body2d.AddForce(new Vector2(-3000f, 100f));
-            }
-           // m_body2d.AddForce(new Vector2(-3000f, 100f));
+            } 
         }
         if (collision.transform.name == "HealthPickUp")
         {
@@ -200,4 +203,11 @@ public class Bandit : MonoBehaviour {
             Destroy(collision.gameObject);
         }
     }
+    IEnumerator DelayAction(float time)
+    {
+        yield return new WaitForSeconds(time);
+        HurtPlayer(10);
+       
+
+    } 
 }
