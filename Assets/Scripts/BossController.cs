@@ -29,6 +29,10 @@ public class BossController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        banditPosition = target.transform.position;
+        enemyPosition = gameObject.transform.position;
 
         m_body2d = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -40,6 +44,11 @@ public class BossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        banditPosition = target.transform.position;
+        enemyPosition = gameObject.transform.position;
+
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
         {
@@ -57,7 +66,7 @@ public class BossController : MonoBehaviour
 
         if (bandit != null)
         {
-            if (Vector3.Distance(banditPosition, enemyPosition) < 5.5 &&
+            if (Vector3.Distance(banditPosition, enemyPosition) <= 4 &&
                 Input.GetMouseButtonDown(0))
             {
                 StartCoroutine(BossHurt(0.4f));
@@ -105,11 +114,11 @@ public class BossController : MonoBehaviour
 
         if (transform.position.x > target.position.x)
         {
-            m_body2d.AddForce(new Vector2(300f, 100f));
+            m_body2d.AddForce(new Vector2(400f, 100f));
         }
         else
         {
-            m_body2d.AddForce(new Vector2(-300f, 100f));
+            m_body2d.AddForce(new Vector2(-400f, 100f));
         }
         
     }
