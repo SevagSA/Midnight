@@ -34,6 +34,17 @@ public class EnemyHit : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Bandit>().HurtPlayer(10);
+            bandit = collision.GetComponent<Bandit>();
+            banditPosition = collision.transform.position;
+            enemyPosition = gameObject.transform.position;
+        }
+    }
+/*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.name == "LightBandit")
@@ -43,7 +54,7 @@ public class EnemyHit : MonoBehaviour
             enemyPosition = gameObject.transform.position;
         }
     }
-
+*/
     private void HandleEnemyAttacked()
     {
         enemyHealth--;

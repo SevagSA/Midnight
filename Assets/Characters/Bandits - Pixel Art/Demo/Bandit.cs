@@ -26,8 +26,11 @@ public class Bandit : MonoBehaviour {
     float clicktime = 0;
     float clickdelay = 0.5f;
 
-    int health = 100;
-   
+    public int maxHealth = 100;
+    public int health = 100;
+    public int currentHealth;
+    public HealthBar healthB;
+
     private GameMaster gm;
 
     // Use this for initialization
@@ -36,7 +39,7 @@ public class Bandit : MonoBehaviour {
         m_body2d = GetComponent<Rigidbody2D>();
         m_groundSensor = transform.Find("GroundSensor").GetComponent<Sensor_Bandit>();
 
-        target = GameObject.FindGameObjectWithTag("HeavyBandit").GetComponent<Transform>();
+      //  target = GameObject.FindGameObjectWithTag("HeavyBandit").GetComponent<Transform>();
         gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
         transform.position = gm.lastCheckPointPos;
     }
@@ -96,7 +99,7 @@ public class Bandit : MonoBehaviour {
 
         // -- Handle Animations --
         //Death
-        if (health == 0) {
+        if (health <= 0) {
             if (!m_isDead)
             {
                 KillPlayer();
@@ -156,10 +159,14 @@ public class Bandit : MonoBehaviour {
         m_speed = speed;
     }
 
-    void HurtPlayer(int damage)
+    public void HurtPlayer(int damage)
     {
-        healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
-        health -= damage;
+        currentHealth -= damage;
+        healthB.SetHealth(currentHealth);
+
+        /*   healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
+           health -= damage;
+        */
         m_animator.SetTrigger("Hurt");
     }
     void HealPlayer(int addedHealth)
@@ -181,14 +188,13 @@ public class Bandit : MonoBehaviour {
     {
         if (collision.transform.CompareTag("Enemy"))
         {
-                HurtPlayer(10);
+            HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
         if (collision.transform.name == "HeavyBandit")
         {
-            // StartCoroutine(DelayAction(1f));
             HurtPlayer(10);
-                 if (transform.position.x > collision.transform.position.x)
+            if (transform.position.x > collision.transform.position.x)
             {
                 m_body2d.AddForce(new Vector2(3000f, 100f));
             }
