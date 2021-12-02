@@ -24,7 +24,10 @@ public class Bandit : MonoBehaviour {
     float clicktime = 0;
     float clickdelay = 0.5f;
 
-    int health = 100;
+    public int maxHealth = 100;
+    public int health = 100;
+    public int currentHealth;
+    public HealthBar healthB;
 
     private GameMaster gm;
 
@@ -93,7 +96,7 @@ public class Bandit : MonoBehaviour {
 
         // -- Handle Animations --
         //Death
-        if (health == 0) {
+        if (currentHealth <= 0) {
             if (!m_isDead)
             {
                 KillPlayer();
@@ -153,10 +156,14 @@ public class Bandit : MonoBehaviour {
         m_speed = speed;
     }
 
-    void HurtPlayer(int damage)
+    public void HurtPlayer(int damage)
     {
-        healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
-        health -= damage;
+        currentHealth -= damage;
+        healthB.SetHealth(currentHealth);
+
+        /*   healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
+           health -= damage;
+        */
         m_animator.SetTrigger("Hurt");
     }
     void HealPlayer(int addedHealth)
