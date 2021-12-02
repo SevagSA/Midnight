@@ -97,16 +97,6 @@ public class Bandit : MonoBehaviour {
             hasDoubleJumped = true;
         }
 
-        // -- Handle Animations --
-        //Death
-        if (health <= 0) {
-            if (!m_isDead)
-            {
-                KillPlayer();
-            }
-            m_isDead = !m_isDead;
-        }
-
         else if (Input.GetKeyDown("s") || Input.GetKeyDown("down"))
         {
             m_animator.SetTrigger("Death");
@@ -164,9 +154,16 @@ public class Bandit : MonoBehaviour {
         currentHealth -= damage;
         healthB.SetHealth(currentHealth);
 
-        /*   healthBar.transform.localScale = new Vector3((health - damage) * 0.01f, 1f);
-           health -= damage;
-        */
+        if (currentHealth <= 0)
+        {
+            if (!m_isDead)
+            {
+                m_animator.SetTrigger("Death");
+                KillPlayer();
+            }
+            m_isDead = !m_isDead;
+        }
+
         m_animator.SetTrigger("Hurt");
     }
     void HealPlayer(int addedHealth)
@@ -186,10 +183,24 @@ public class Bandit : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if (collision.transform.CompareTag("Enemy"))
         {
             HurtPlayer(10);
             m_body2d.AddForce(new Vector2(-3000f, 100f));
+        }
+        */
+        if (collision.transform.name == "Enemy")
+        {
+            HurtPlayer(10);
+            if (transform.position.x > collision.transform.position.x)
+            {
+                m_body2d.AddForce(new Vector2(3000f, 100f));
+            }
+            else
+            {
+                m_body2d.AddForce(new Vector2(-3000f, 100f));
+            }
         }
         if (collision.transform.name == "HeavyBandit")
         {
