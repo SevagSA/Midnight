@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class Enemy_behaviour : MonoBehaviour
 {
@@ -26,6 +28,14 @@ public class Enemy_behaviour : MonoBehaviour
 
     private float enemyToPlayerDistance;
 
+    private Vector3 banditPosition;
+    private Vector3 enemyPosition;
+    private int enemyHealth = 3;
+    private TMP_Text goldAmnt;
+    public int enemeyKillGoldAmnt = 10;
+
+    private Bandit bandit = null;
+
     void Awake()
     {
         SelectTarget();
@@ -48,6 +58,14 @@ public class Enemy_behaviour : MonoBehaviour
         if (inRange)
         {
             EnemyLogic();
+        }
+        if (bandit != null)
+        {
+            if (Vector3.Distance(banditPosition, enemyPosition) < 2 &&
+                Input.GetMouseButtonDown(0))
+            {
+                HandleEnemyAttacked();
+            }
         }
     }
 
@@ -157,5 +175,24 @@ public class Enemy_behaviour : MonoBehaviour
         //rotation.y = (currentTarget.position.x < transform.position.x) ? rotation.y = 180f : rotation.y = 0f;
 
         transform.eulerAngles = rotation;
+    }
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Bandit>().HurtPlayer(10);
+            bandit = collision.GetComponent<Bandit>();
+            banditPosition = collision.transform.position;
+            enemyPosition = gameObject.transform.position;
+        }
+    }
+    private void HandleEnemyAttacked()
+    {
+        enemyHealth--;
+        if (enemyHealth == 0)
+        {
+            Destroy(gameObject);
+            goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
+        }
     }
 }
