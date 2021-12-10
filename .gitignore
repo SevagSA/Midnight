@@ -32,6 +32,9 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+# Removing the user settings from the git repo.
+/UserSettings
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
