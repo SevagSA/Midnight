@@ -190,6 +190,7 @@ public class Bandit : MonoBehaviour {
             m_body2d.AddForce(new Vector2(-3000f, 100f));
         }
         */
+        /*
         if (collision.transform.name == "Enemy")
         {
             HurtPlayer(10);
@@ -202,6 +203,7 @@ public class Bandit : MonoBehaviour {
                 m_body2d.AddForce(new Vector2(-3000f, 100f));
             }
         }
+        */
         if (collision.transform.name == "HeavyBandit")
         {
             HurtPlayer(10);
