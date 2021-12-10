@@ -6,6 +6,8 @@ public class Enemy_behaviour : MonoBehaviour
 {
     public float attackDistance; //Minimum distance to trigger attack
     public float moveSpeed;
+    public float stoppingDistance = 2;
+    public float playerFollowRange = 5;
     public float timer; //Timer for cooldown between attacks
     public Transform leftLimit;
     public Transform rightLimit;
@@ -20,6 +22,9 @@ public class Enemy_behaviour : MonoBehaviour
     private bool attackMode;
     private bool cooling; //Check if Enemy is in cooldown after attack
     private float intTimer;
+
+
+    private float enemyToPlayerDistance;
 
     void Awake()
     {
@@ -69,12 +74,13 @@ public class Enemy_behaviour : MonoBehaviour
     void Move()
     {
         anim.SetBool("canWalk", true);
+        enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
 
-        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Enemy_attack"))
+        if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
         {
             Vector2 targetPosition = new Vector2(target.position.x, transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         }
     }
 
