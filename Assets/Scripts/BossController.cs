@@ -63,26 +63,27 @@ public class BossController : MonoBehaviour
             Flip();
         }
     
-
-
-   
         enemyToPlayerDistance = Vector2.Distance(transform.position, target.position);
         if (playerFollowRange > enemyToPlayerDistance && enemyToPlayerDistance > stoppingDistance)
-
-
         {
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             m_animator.SetInteger("AnimState", 2);
         }
 
-        //if (enemyToPlayerDistance < stoppingDistance)
-        //{
-        //    m_animator.SetTrigger("Attack");
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        StartCoroutine(BossHurt(0.4f));
-        //    }
-        //}
+        if (enemyToPlayerDistance <= stoppingDistance)
+        {
+            /**
+                The reason why the boss is holding his sword in the air and not actually
+                hitting, is because, since this if statement is in the Update() method, 
+                it is being called repeatedly, so that means that the we are not giving
+                time for the animation to finish and we are just re-calling the animation,
+                that's why the animation is stuck in its initial stack, which is the sword in the ait.
+                
+                to fix this, the aniaimtion needs to be called once.
+            */
+            m_animator.SetTrigger("Attack");
+
+        }
 
         if (bandit != null)
         {
@@ -136,11 +137,11 @@ public class BossController : MonoBehaviour
 
         if (transform.position.x > target.position.x)
         {
-            m_body2d.AddForce(new Vector2(200f, 100f));
+            m_body2d.AddForce(new Vector2(150f, 100f));
         }
         else
         {
-            m_body2d.AddForce(new Vector2(-200f, 100f));
+            m_body2d.AddForce(new Vector2(-150f, 100f));
         }
         
     }
