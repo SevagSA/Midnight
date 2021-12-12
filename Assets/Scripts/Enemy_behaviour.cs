@@ -182,7 +182,7 @@ public class Enemy_behaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<Bandit>().HurtPlayer(10);
+           // collision.gameObject.GetComponent<Bandit>().HurtPlayer(10);
             bandit = collision.GetComponent<Bandit>();
             banditPosition = collision.transform.position;
             enemyPosition = gameObject.transform.position;
