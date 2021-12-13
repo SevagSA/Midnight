@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
@@ -111,10 +112,9 @@ public class BossController : MonoBehaviour
         if (enemyHealth == 0)
         {
             m_animator.SetTrigger("Death");
-           StartCoroutine(DelayAction(1f));
+            StartCoroutine(DelayAction(1f));
 
             //Destroy(gameObject);
-            Debug.Log(goldAmnt.text);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
     }
@@ -123,6 +123,7 @@ public class BossController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
+        SceneManager.LoadScene("demo");
     }
 
     IEnumerator BossHurt(float time)
