@@ -168,7 +168,7 @@ public class Enemy_behaviour : MonoBehaviour
         {
             rotation.y = 180;
         }
-        else
+        if (transform.position.x < target.position.x)
         {
             rotation.y = 0;
         }
@@ -176,7 +176,7 @@ public class Enemy_behaviour : MonoBehaviour
         //Ternary Operator
         //rotation.y = (currentTarget.position.x < transform.position.x) ? rotation.y = 180f : rotation.y = 0f;
 
-        transform.eulerAngles = rotation;
+       transform.eulerAngles = rotation;
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -191,15 +191,21 @@ public class Enemy_behaviour : MonoBehaviour
     private void HandleEnemyAttacked()
     {
         enemyHealth--;
-        anim.SetTrigger("Enemy_hurt");
+      //  anim.SetTrigger("Enemy_hurt");
        
         
         if (enemyHealth == 0)
         {
-
-            Destroy(gameObject);
+            anim.SetTrigger("Enemy_Death");
+            StartCoroutine(DelayAction(2f));
+            //Destroy(gameObject);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
         }
+    }
+    IEnumerator DelayAction(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
     }
     IEnumerator enemyHurt(float time)
     {
