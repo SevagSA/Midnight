@@ -209,11 +209,11 @@ public class Bandit : MonoBehaviour {
             HurtPlayer(10);
             if (transform.position.x > collision.transform.position.x)
             {
-                m_body2d.AddForce(new Vector2(3000f, 100f));
+                m_body2d.AddForce(new Vector2(9000f, 500f));
             }
             else
             {
-                m_body2d.AddForce(new Vector2(-3000f, 100f));
+                m_body2d.AddForce(new Vector2(-9000f, 500f));
             } 
         }
         if (collision.transform.name == "HealthPickUp")

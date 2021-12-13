@@ -75,18 +75,15 @@ public class BossController : MonoBehaviour
             m_animator.SetInteger("AnimState", 2);
         }
 
-        //if (enemyToPlayerDistance < stoppingDistance)
-        //{
-        //    m_animator.SetTrigger("Attack");
-        //    if (Input.GetMouseButtonDown(0))
-        //    {
-        //        StartCoroutine(BossHurt(0.4f));
-        //    }
-        //}
+        if (enemyToPlayerDistance < stoppingDistance)
+        {
+            m_animator.SetTrigger("Attack");
+           
+        }
 
         if (bandit != null)
         {
-            if (Vector3.Distance(banditPosition, enemyPosition) <= 4 &&
+            if (Vector3.Distance(banditPosition, enemyPosition) < 4 &&
                 Input.GetMouseButtonDown(0))
             {
                 StartCoroutine(BossHurt(0.4f));
@@ -96,7 +93,7 @@ public class BossController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.name == "LightBandit")
+        if (collision.gameObject.tag == "Player")
         {
             bandit = collision.GetComponent<Bandit>();
             banditPosition = collision.transform.position;
@@ -131,9 +128,6 @@ public class BossController : MonoBehaviour
     IEnumerator BossHurt(float time)
     {
         yield return new WaitForSeconds(time);
-        m_animator.SetTrigger("Hurt");
-        HandleEnemyAttacked();
-
         if (transform.position.x > target.position.x)
         {
             m_body2d.AddForce(new Vector2(200f, 100f));
@@ -142,6 +136,10 @@ public class BossController : MonoBehaviour
         {
             m_body2d.AddForce(new Vector2(-200f, 100f));
         }
+        m_animator.SetTrigger("Hurt");
+        HandleEnemyAttacked();
+
+       
         
     }
     void Flip()
