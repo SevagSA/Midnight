@@ -553,6 +553,6 @@ MonoBehaviour:
   rightLimit: {fileID: 0}
   target: {fileID: 0}
   inRange: 0
-  detectZone: {fileID: 0}
-  triggerArea: {fileID: 0}
+  detectZone: {fileID: 53506328422059812}
+  triggerArea: {fileID: 53506327020673910}
   enemeyKillGoldAmnt: 10
