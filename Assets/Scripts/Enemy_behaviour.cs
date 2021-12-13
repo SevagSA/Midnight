@@ -66,7 +66,7 @@ public class Enemy_behaviour : MonoBehaviour
             if (Vector3.Distance(banditPosition, enemyPosition) < 2 &&
                 Input.GetMouseButtonDown(0))
             {
-                StartCoroutine(enemyHurt(0.4f));
+                enemyHit();
             }
         }
     }
@@ -191,7 +191,7 @@ public class Enemy_behaviour : MonoBehaviour
     private void HandleEnemyAttacked()
     {
         enemyHealth--;
-      //  anim.SetTrigger("Enemy_hurt");
+       anim.SetTrigger("Enemy_hurt");
        
         
         if (enemyHealth == 0)
@@ -200,6 +200,22 @@ public class Enemy_behaviour : MonoBehaviour
             StartCoroutine(DelayAction(2f));
             //Destroy(gameObject);
             goldAmnt.text = (Int32.Parse(goldAmnt.text) + enemeyKillGoldAmnt).ToString();
+        }
+    }
+    private void enemyHit()
+    {
+       
+        HandleEnemyAttacked();
+
+        Debug.Log("Hit");
+
+        if (transform.position.x > target.position.x)
+        {
+            m_body2d.AddForce(new Vector2(2000f, 100f));
+        }
+        else
+        {
+            m_body2d.AddForce(new Vector2(-2000f, 100f));
         }
     }
     IEnumerator DelayAction(float time)
