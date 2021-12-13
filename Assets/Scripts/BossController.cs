@@ -123,7 +123,14 @@ public class BossController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Destroy(gameObject);
-        SceneManager.LoadScene("demo");
+        String scene = SceneManager.GetActiveScene().name;
+        if (scene == "Level1Test")
+        {
+            SceneManager.LoadScene("demo");
+        } else
+        {
+            SceneManager.LoadScene("GameWon");
+        }
     }
 
     IEnumerator BossHurt(float time)
