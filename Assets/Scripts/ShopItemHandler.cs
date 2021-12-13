@@ -48,16 +48,7 @@ public class ShopItemHandler : MonoBehaviour
     }
 
     public void BuyItem()
-    {
-
-        /**
-        DONE Make sure player has enough gold
-        DONE reduce price from total
-        DONE get currentHealth
-        DONE add healthAmount to currentHealth
-        DONE Make sure health max amouunt (100) is respected after addition
-        */
-        
+    {   
         TextMeshProUGUI goldAmntHolder;
         int goldAmnt;
         
@@ -66,17 +57,26 @@ public class ShopItemHandler : MonoBehaviour
         
         GameObject currentHealth = GameObject.FindWithTag("PlayerHealthBar");
         Vector3 currentHealthScale = currentHealth.transform.localScale;
+        HealthBar healthBar = currentHealth.GetComponent<HealthBar>();
+
         
-        float newHealthAmnt = currentHealthScale.x + shopItem.healthAmount;
-        Debug.Log(newHealthAmnt);
+        float newHealthAmnt = healthBar.slider.value + shopItem.healthAmount;
+
         if (newHealthAmnt > 1) {
             newHealthAmnt = newHealthAmnt - (newHealthAmnt % 1);
         }
+
         if (shopItem.price <= goldAmnt) {
             goldAmnt -= shopItem.price;
             goldAmntHolder.SetText(goldAmnt.ToString());
-            currentHealthScale.x = newHealthAmnt;
-            currentHealth.transform.localScale = currentHealthScale;
+
+            if (newHealthAmnt > 1)
+            {
+                newHealthAmnt = newHealthAmnt - (newHealthAmnt % 1);
+            }
+            Debug.Log(newHealthAmnt);
+            healthBar.SetHealth((int)newHealthAmnt);
+
             CloseItemPanel();
         } else {
             Debug.Log("Not enough gold!");

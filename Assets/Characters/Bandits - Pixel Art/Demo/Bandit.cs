@@ -168,13 +168,18 @@ public class Bandit : MonoBehaviour {
     }
     void HealPlayer(int addedHealth)
     {
-        if (health != 100)
-        {
-            healthBar.transform.localScale = new Vector3((health + addedHealth) * 0.01f, 1f);
-            health += addedHealth;
-        }
+        GameObject currentHealth = GameObject.FindWithTag("PlayerHealthBar");
+        Vector3 currentHealthScale = currentHealth.transform.localScale;
+        HealthBar healthBar = currentHealth.GetComponent<HealthBar>();
 
+        float newHealthAmnt = healthBar.slider.value + addedHealth;
+        if (newHealthAmnt > 1)
+        {
+            newHealthAmnt = newHealthAmnt - (newHealthAmnt % 1);
+        }
+        healthBar.SetHealth((int)newHealthAmnt);
     }
+
     void KillPlayer()
     {
         m_animator.SetTrigger("Death");
@@ -216,7 +221,7 @@ public class Bandit : MonoBehaviour {
                 m_body2d.AddForce(new Vector2(-9000f, 500f));
             } 
         }
-        if (collision.transform.name == "HealthPickUp")
+        if (collision.transform.CompareTag("HealthPickup"))
         {
             HealPlayer(10);
             Destroy(collision.gameObject);
@@ -226,7 +231,5 @@ public class Bandit : MonoBehaviour {
     {
         yield return new WaitForSeconds(time);
         HurtPlayer(10);
-       
-
     } 
 }

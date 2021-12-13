@@ -279,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &29672859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,11 +1210,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4805181885227780, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 249.8
+      value: -14.7
       objectReference: {fileID: 0}
     - target: {fileID: 4805181885227780, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8
+      value: -2.03
       objectReference: {fileID: 0}
     - target: {fileID: 4805181885227780, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1573,7 +1573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &452513310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2908,6 +2908,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 478231002}
     m_Modifications:
+    - target: {fileID: 80432212092440374, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 80432212092440375, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2935,6 +2939,10 @@ PrefabInstance:
     - target: {fileID: 80432212525028250, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 80432212525028250, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 80432212525028251, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
       propertyPath: m_Pivot.x
@@ -3002,7 +3010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 80432212525028251, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 159.4
+      value: 159.39996
       objectReference: {fileID: 0}
     - target: {fileID: 80432212525028251, guid: e7bf48768c1c19347878a5da9c904aba, type: 3}
       propertyPath: m_AnchoredPosition.y
